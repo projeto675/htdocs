@@ -30,9 +30,11 @@
              ////////////////////////////////////////////////
              //fazer conexao para saber qualeuipe chamada //
              /////exibir escals /////////////////////
+             
              $stmt = $conexao->prepare("SELECT * FROM events
-             WHERE start BETWEEN '$data_in' AND '$data_fim'  AND id_usuario=:id ");
+             WHERE start BETWEEN '$data_in' AND '$data_fim'  AND id_usuario=:id  AND id_setror=:id_setror ");
              $stmt->bindValue(":id",$id_usuario);
+             $stmt->bindValue(":id_setror", $_GET['id']);  
              if ($stmt->execute()) {
                 $count = $stmt->rowCount();
                 if($count =='0') {
@@ -49,7 +51,7 @@
                         echo"<hr>";  
                         $numero='1';
                         $horas='12';
-                        while ($numero < 1200) {       
+                        while ($numero < 120) {       
                     if( $numero < 2) {   
                         echo"EEEEEEEEEEEEEEEE "; 
                         $date = new DateTime( $data_in );

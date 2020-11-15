@@ -49,7 +49,7 @@ if(isset($_POST['nome_tecnico'])){
   $id_membro=$post['0'];
   $nome_membro=$post['1'];
   $post['2'];
-  
+
     $stmt = $conexao->prepare("INSERT INTO equipe (nome,setor,id_setor,id_membro,tipo_escala,ordem_equipe) VALUES (?,?,?,?,?,?)");
     $stmt->bindParam(1,$nome_membro);
     $stmt->bindParam(2,$nome_setor);
@@ -72,17 +72,18 @@ if(isset($_POST['nome_tecnico_cad'])){
   $data=date('y-m-d h:i:s');
   $session=uniqueAlfa(11);
   $codigo_acesso= uniqueAlfa(4);
-  $stmt = $conexao->prepare("INSERT INTO usuario (nome,sobrenome,data_cadastro,session,codigo_acesso) VALUES (?,?, ?,?,?)");
+  $stmt = $conexao->prepare("INSERT INTO usuario (nome,sobrenome,data_cadastro,session,codigo_acesso,local_trabalho) VALUES (?,?,?, ?,?,?)");
   $stmt->bindParam(1, $nome);
   $stmt->bindParam(2, $sobre_nome);
   $stmt->bindParam(3, $data);
   $stmt->bindParam(4, $session);
   $stmt->bindParam(5, $codigo_acesso);
+  $stmt->bindParam(6, $local);
   $cad_user_ok=$stmt->execute();   
   if($cad_user_ok){ 
   $_SESSION['envio']="1";
  }  
-
+ 
 ///agora preiso recuperar o ultimo id 
 $stmt=$conexao->prepare("SELECT id FROM usuario    ORDER BY id DESC limit 1 ");
 $stmt->execute(); 
@@ -121,33 +122,22 @@ while ($login = $stmt->fetch(PDO::FETCH_OBJ)) {
 
 $i_setor=@$_GET['setor'];
 $stmt = $conexao->prepare("SELECT *  FROM equipe  WHERE id_setor=:id    ORDER BY id DESC");
-$stmt->bindValue(":id", $i_setor);
+$stmt->bindValue(":id", $_SESSION['id_para_setor']);
 
 $stmt->execute();
 //$stmt = $conexao->prepare("SELECT * FROM usuario WHERE nome=$nome");
  if ($stmt->execute()) {
-
+ echo "numero de tc"  .$numero_tec_total;echo '<br>';
 echo  $count = $stmt->rowCount();
-     if($count > $numero_tec_total){ ?>
-      
+     if($count < $numero_tec_total){ ?>
     
-    
-
-
-
-
-<div class="card border-secondary col-md-12" >
+  <div class="card border-secondary col-md-12" >
   <h5 class="card-header">Cadastrar Equipe <?=$V_ordem;?></h5>
   <div class="card-body text-secondary">
-  
-   
-
-
-   <form role="form" method="post" action="?ordem=<?=trim($_GET['ordem'])+1;?>" > 
-   <div class="form-row col-md-12">
-   
-   <div class="col-md-8 mb-3">
-    <label for="validationCustom04">Nome</label>       
+  <form role="form" method="post" action="?ordem=<?=trim($_GET['ordem'])+1;?>" > 
+  <div class="form-row col-md-12">
+  <div class="col-md-8 mb-3">
+  <label for="validationCustom04">Nome</label>       
               <input type="text"   name="nome_tecnico"  class="form-control" autocomplete="off" placeholder="Nome do Membro"  value="" id="inputString" onKeyUp="lookup(this.value);" onBlur="fill();" />
               <div class="suggestionsBox " id="suggestions" style="display: none;">
               <div class="suggestionList" id="autoSuggestionsList"></div>
@@ -211,11 +201,10 @@ echo  $count = $stmt->rowCount();
    //////////////////se escala completa///////
    ?> 
  <div class="card text-center">
-  
   <div class="card-body">
-    <h5 class="card-title">Cadastro a  equipe Concluio </h5>
-    <p class="card-text">Clik em gerar escala para gerar escala do proximo mês .</p>
-    <a href="/nova_escala.php?id=<?=$_SESSION['id_para_setor'];?>" class="btn btn-primary">Gerar Escala</a>
+  <h5 class="card-title">Cadastro a  equipe Concluio </h5>
+  <p class="card-text">Clik em gerar escala para gerar escala do proximo mês .</p>
+  <a href="/nova_escala.php?id=<?=$_SESSION['id_para_setor'];?>" class="btn btn-primary">Gerar Escala</a>
   </div>
   <div class="card-footer text-muted">
     2 dias atrás

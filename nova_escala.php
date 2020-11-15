@@ -2,17 +2,11 @@
 include_once 'conexao.php';
 include_once 'topo.php';
 include_once'class/class.php';
-if(!isset($_SESSION['id_para_setor'])){
-    $_SESSION['id_para_setor']=$_GET['id'];
-}
-?>  
 
-
-<?
 
 
 $stmtz = $conexao->prepare("SELECT *  FROM equipe  WHERE id_setor=:id   ORDER BY ordem_equipe ASC LIMIT 99 ");
-$stmtz->bindValue(":id",  $_SESSION['id_para_setor']);
+$stmtz->bindValue(":id", $_GET['id']);
 $stmtz->execute();
 if ($stmtz->execute()) {
   $count = $stmtz->rowCount();

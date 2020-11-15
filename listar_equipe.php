@@ -1,7 +1,7 @@
 <? 
 
 $stmt = $conexao->prepare("SELECT *  FROM equipe  WHERE id_setor=:id    ORDER BY id DESC");
-$stmt->bindValue(":id", $i_setor);
+$stmt->bindValue(":id", $_SESSION['id_para_setor']  );
 $stmt->execute();
 //$stmt = $conexao->prepare("SELECT * FROM usuario WHERE nome=$nome");
  if ($stmt->execute()) {
@@ -17,7 +17,7 @@ $stmt->execute();
          </tr>
        </thead><tbody><?
  $count = $stmt->rowCount();
-     if($count >0){?> <button type="button" class="btn btn-light">Você  tem setor <?=$count;?>  cadastrados</button> <?
+     if($count != 0){?> <button type="button" class="btn btn-light">Você  tem setor <?=$count;?>  cadastrados</button> <?
     while ($login = $stmt->fetch(PDO::FETCH_OBJ)) {
         ?>
         <tr>

@@ -30,7 +30,7 @@
         <a class="nav-link" href="#">Gerenciar Trocas</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="?cadastro_user">Cadastrar membro da equipe</a>
+        <a class="nav-link" href="/cadastrar_setor.php">Cadastrar Setor</a>
       </li>
       <li class="nav-item">
         <a class="nav-link " href="?cadastrar_equpe">Criar equipe </a>
