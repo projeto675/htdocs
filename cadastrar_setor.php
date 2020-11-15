@@ -4,17 +4,27 @@ coordenador();
 
 
 include_once'menu_superior.php';
-if(isset($_POST['setor'])){
+if(isset($_POST['customer'])){
+  $customer=[];
+  $customer=$_POST['customer'];
+ 
+  //$post= $customer['3'];
 //////fazer o calculo o numero e tecnicos totais
 ///para 12X24X12X96 precisa de 6 quipes 120horas casa 
-if($_POST['tipo_escala']=='12X24X12X96'){$n='6';}
-if($_POST['tipo_escala']=='12X36'){$n='4';}
-$numero_tecnicos_turno=trim($_POST['numero_tecnicos_turno']);
-$ntecnicos=$_POST['numero_tecnicos_turno']*$n;
-   
+if($customer ["'tipo_escala'"]=='12X24X12X96'){$n='6';}
+if($customer ["'tipo_escala'"]=='12X36'){$n='4';}
+$customer['numero_de_equipes']=$n;
+$customer['numero_tec_total']=$customer ["'numero_tecnicos_turno'"]*$n;
+$customer['id_cordenador']=$_SESSION['id'];
+$customer['local']=trim($_SESSION['local_trabalho']);
+$customer['data']=$agora;
+//var_dump($customer);
+save('setor', $customer);   
+exit();
     $setor=trim( $_POST['setor']);
     $id_cordenador=trim($_SESSION['id']);
     $local_trabalho=trim($_SESSION['local_trabalho']);
+
     $stmt = $conexao->prepare("INSERT INTO setor (setor,id_cordenador,local,tipo_escala,numero_tecnicos_turno,numero_tec_total,numero_de_equipes) VALUES (?,?,?,?,?,?,?)");
     $stmt->bindParam(1,$setor);
     $stmt->bindParam(2,$id_cordenador);
@@ -42,7 +52,7 @@ $ntecnicos=$_POST['numero_tecnicos_turno']*$n;
   <div class="form-row">
     <div class="col-md-6 mb-3">
     <label for="validationCustom04">Setor</label>
-      <input type="text" class="form-control" name="setor" id="validationCustom01" placeholder="Setor" required>
+      <input type="text" class="form-control"  name="customer['setor']"  id="validationCustom01" placeholder="Setor" required>
       <small id="passwordHelpBlock" class="form-text text-muted">
  ex UTI Clínica Médica Pronto Socorro </small><div class="valid-feedback">
        ok
@@ -50,7 +60,7 @@ $ntecnicos=$_POST['numero_tecnicos_turno']*$n;
     </div>
     <div class="col-md-5 mb-3">
       <label for="validationCustom04">Número técnicos por plantao </label>
-      <select class="custom-select" name="numero_tecnicos_turno" id="validationCustom04" required>
+      <select class="custom-select" name="customer['numero_tecnicos_turno']" id="validationCustom04" required>
         <option selected disabled value="2">Número de Técnicos por  plantão </option>
         <option value='1'>1</option>
         <option>2</option>
@@ -68,7 +78,7 @@ $ntecnicos=$_POST['numero_tecnicos_turno']*$n;
     <div class="col-md-12 mb-3"><h4>Tipo de Escada</h4>	 </div> 
     
     <div class="col-md-6 mb-3">
-    <input class="form-check-input" type="radio" name="tipo_escala" id="exampleRadios1" value="12X24X12X96" checked>
+    <input class="form-check-input" type="radio"  name="customer['tipo_escala']"   id="exampleRadios1" value="12X24X12X96" checked>
     <label class="form-check-label" for="exampleRadios1">
     SD,FN,FD,SN,24H,24H,24H,24H,
     </label>
@@ -78,7 +88,7 @@ $ntecnicos=$_POST['numero_tecnicos_turno']*$n;
     </div>
 
   <div class="col-md-6 mb-3">
-      <input class="form-check-input" type="radio" name="tipo_escala" id="exampleRadios1" value="12X36" >
+      <input class="form-check-input" type="radio" name="customer['tipo_escala']" id="exampleRadios1" value="12X36" >
       <label class="form-check-label" for="exampleRadios1">
        SD,FN,FD,FN 
       </label>
@@ -101,134 +111,12 @@ $ntecnicos=$_POST['numero_tecnicos_turno']*$n;
  
 </div>
 
-<script>
+<script type="text/javascript">
 /////////////////////////////////////script para impedir reemvio pelo botão atualizar//
 if ( window.history.replaceState ) {
   window.history.replaceState( null, null, window.location.href );
 }
 ///////////////////////////////////////////////////////////////////////////////////////
 // Example starter JavaScript for disabling form submissions if there are invalid fields
-(function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
-})();
-</script>
 
- 
-  
- 
-</form>
-
-<script type="text/javascript">
-
-  var idContador = 0;
-      
-  function exclui(id){
-    var campo = $("#"+id.id);
-    campo.hide(200);
-  }
-
-  $( document ).ready(function() {
-    
-    $("#btnAdicionaEmail").click(function(e){
-      e.preventDefault();
-      var tipoCampo = "email";
-      adicionaCampo(tipoCampo);
-    })
-    
-    $("#btnAdicionaTelefone").click(function(e){
-      e.preventDefault();
-      var tipoCampo = "telefone";
-      adicionaCampo(tipoCampo);
-    })
-    
-    function adicionaCampo(tipo){
-
-      idContador++;
-      
-      var idCampo = "campoExtra"+idContador;
-      var idForm = "formExtra"+idContador;
-    
-      var html = "";
-      
-      html += "<div style='margin-top: 8px;' class='input-group' id='"+idForm+"'>";
-      html += "<input type='text' name='setor"+idCampo+"'id='"+idCampo+"' class='form-control novoCampo' placeholder='Setores de sua Cordenação'/>";
-      html += "<span class='input-group-btn'>";
-      html += "<button class='btn' onclick='exclui("+idForm+")' type='button'><span class='fa fa-trash'></span></button>";html += "<button class='btn' onclick='exclui("+idForm+")' type='button'><span class='fa fa-trash'></span></button>";
-      html += "</span>";
-      html += "</div>";
-      
-      $("#imendaHTML"+tipo).append(html);
-    }
-    
-    $(".btnExcluir").click(function(){
-      console.log("clicou");
-      $(this).slideUp(200);
-    })
-    
-    $("#btnSalvar").click(function(){
-    
-    var mensagem = "";
-    var novosCampos = [];
-    var camposNulos = false;
-    
-      $('.campoDefault').each(function(){
-        if($(this).val().length < 1){
-          camposNulos = true;
-        }
-      });
-      $('.novoCampo').each(function(){
-        if($(this).is(":visible")){
-          if($(this).val().length < 1){
-            camposNulos = true;
-          }
-          //novosCampos.push($(this).val());
-          mensagem+= $(this).val()+"\n";
-        }
-      });
-      
-      if(camposNulos == true){
-        alert("Atenção: existem campos nulos");
-      }else{
-        alert("Novos campos adicionados: \n\n "+mensagem);
-      }
-      
-      novosCampos = [];
-    })
-    
-  });
-  
-  </script>
-<script type="text/javascript">
-  function lookup(inputString) {
-    if(inputString.length == 0) {
-      // Hide the suggestion box.
-      $('#suggestions').hide();
-    } else {
-      $.post("listar_cidade.php", {queryString: ""+inputString+""}, function(data){
-        if(data.length >1) {
-          $('#suggestions').show();
-          $('#autoSuggestionsList').html(data);
-        }
-      });
-    }
-  } 
-  
-  function fill(thisValue) {
-    $('#inputString').val(thisValue);
-    setTimeout("$('#suggestions').hide();", 200);
-  }
 </script>

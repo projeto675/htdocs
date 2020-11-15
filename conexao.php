@@ -1,4 +1,5 @@
 <?php
+$agora=date('Y-m-d H:i:s');
 
 $url=trim($_SERVER['SERVER_NAME']);
 if($url=='localhost'){ 

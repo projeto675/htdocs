@@ -11,7 +11,7 @@ if(!isset($_SESSION) ){
     session_id();
 
 }
-
+include_once'database.php';
 
 define('HOST', 'localhost');
 define('USER', 'root');

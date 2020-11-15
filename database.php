@@ -1,7 +1,18 @@
 <?php
+/** O nome do banco de dados*/
+define('DB_NAME', 'app_escala');
 
+/** Usuário do banco de dados MySQL */
+define('DB_USER', 'root');
+
+/** Senha do banco de dados MySQL */
+define('DB_PASSWORD', '');
+
+/** nome do host do MySQL */
+define('DB_HOST', 'localhost');
 mysqli_report(MYSQLI_REPORT_STRICT);
-
+global $ver;
+global $ver_unico;
 function open_database() {
 	try {
 		$conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -19,7 +30,13 @@ function close_database($conn) {
 		echo $e->getMessage();
 	}
 }
-
+$db = open_database(); 
+	
+	if ($db) {
+		echo '<h1>Banco de Dados Conectado!</h1>';
+	} else {
+		echo '<h1>ERRO: Não foi possível Conectar!</h1>';
+	}
 /**
  *  Pesquisa um Registro pelo ID em uma Tabela
  */
@@ -90,9 +107,8 @@ function save($table = null, $data = null) {
 	$columns = rtrim($columns, ',');
 	$values = rtrim($values, ',');
 	
-echo 	$sql = "INSERT INTO " . $table . "($columns)" . " VALUES " . "($values)";
-echo $salvar=$database->query($sql);   
-if($salvar){ echo "deu certo";}else{'echo Deu Ruim';}
+$sql = "INSERT INTO " . $table . "($columns)" . " VALUES " . "($values)";
+
 	try {
 		$database->query($sql);
   
@@ -105,6 +121,21 @@ if($salvar){ echo "deu certo";}else{'echo Deu Ruim';}
 	  $_SESSION['type'] = 'danger';
 	} 
   
-	//close_database($database);
+	close_database($database);
   }
+  function add() {
 
+	if (isset($_POST['customer'])) {
+	  
+	  $today = 
+		date_create('now', new DateTimeZone('America/Sao_Paulo'));
+  
+	   $customer = $_POST['customer'];
+	
+	 $customer['modified'] = $customer['created'] = $today->format("Y-m-d H:i:s");
+	 
+	 
+	  save('customers', $customer);
+	
+	}
+  }
