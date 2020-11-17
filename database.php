@@ -1,15 +1,5 @@
 <?php
-/** O nome do banco de dados*/
-define('DB_NAME', 'app_escala');
 
-/** Usuário do banco de dados MySQL */
-define('DB_USER', 'root');
-
-/** Senha do banco de dados MySQL */
-define('DB_PASSWORD', '');
-
-/** nome do host do MySQL */
-define('DB_HOST', 'localhost');
 mysqli_report(MYSQLI_REPORT_STRICT);
 global $ver;
 global $ver_unico;
@@ -33,32 +23,41 @@ function close_database($conn) {
 $db = open_database(); 
 	
 	if ($db) {
-		echo '<h1>Banco de Dados Conectado!</h1>';
+		
 	} else {
 		echo '<h1>ERRO: Não foi possível Conectar!</h1>';
+		exit();
 	}
 /**
  *  Pesquisa um Registro pelo ID em uma Tabela
  */
-function find( $table = null, $id = null ) {
+function find( $table = null, $id = null,$regra=null,$ordem=null ) {
   
 	$database = open_database();
 	$found = null;
 
 	try {
 	  if ($id) {
-	    $sql = "SELECT * FROM " . $table . " WHERE id = " . $id;
-	    $result = $database->query($sql);
-	    
+		if($regra){
+		$sql = "SELECT * FROM " . $table .$regra . $id . " ". $ordem;	
+		$result = $database->query($sql);
+		} else{   
+		$sql = "SELECT * FROM " . $table . " WHERE id = " . $id;
+		$result = $database->query($sql);
+		}
+	    $nresgistro=[];
+		$nresgistro=$result->num_rows;
+		
 	    if ($result->num_rows > 0) {
-	      $found = $result->fetch_assoc();
+			$found = $result->fetch_all(MYSQLI_ASSOC);
+			
 	    }
 	    
 	  } else {
 	    
 	    $sql = "SELECT * FROM " . $table;
 	    $result = $database->query($sql);
-	    
+	    $nresgistro=$result->num_rows;
 	    if ($result->num_rows > 0) {
 	      $found = $result->fetch_all(MYSQLI_ASSOC);
         
@@ -77,6 +76,7 @@ function find( $table = null, $id = null ) {
 	
 	close_database($database);
 	return $found;
+	return $nresgistro;
 }
 /**
  *  Pesquisa Todos os Registros de uma Tabela

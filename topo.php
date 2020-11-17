@@ -6,6 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href='css/core/main.min.css' rel='stylesheet' />
         <link href='css/daygrid/main.min.css' rel='stylesheet' />
+        <link rel="stylesheet" href="app/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="app/css/style.css" />
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/personalizado.css?<?=time();?>">
 
@@ -20,6 +22,7 @@
         <? 
         include_once'conexao.php';
         include_once'class/class.php';
+        include_once'menu_superior.php';
         if(!isset ($_SESSION['session'])) {
             include'login.php';
             exit();

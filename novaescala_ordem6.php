@@ -2,8 +2,8 @@
             $data_incio = mktime(0, 0, 0, date('m')+1 , 1, date('Y')) ;
              $data_in = date('Y-m-d ',$data_incio);
              $data_fim = mktime(23, 59, 59, date('m')+2, date('d')-date('j'), date('Y'));
-             echo "datafimm". $data_fim=  date('Y-m-d ',$data_fim);echo "<br>";
-             echo "datacomeco".$data_in;echo "<br>";
+            $data_fim=  date('Y-m-d ',$data_fim);
+           $data_in;
              $nome=$nome_usuario;
              $id_user=$id_usuario;
              // Pegar o último dia.
@@ -38,14 +38,14 @@
              if ($stmt->execute()) {
                 $count = $stmt->rowCount();
                 if($count =='0') {
-                echo "ok vamos adicionar"; echo"<br>";echo"<br>";echo"<br>";echo"<br>";
+               
                 /////////////não tenho evento vou cadastrar
                 $date = new DateTime($minha_data);
                 $turno=false;
                   ///esse paremtro tem de vim do banco cordenador
                         //////////////////script manual escala HMI//////////////////////////
                         ///rodo 1  /////
-                        echo "<br>";
+                       
                     
                 
                         echo"<hr>";  
@@ -53,15 +53,15 @@
                         $horas='12';
                         while ($numero < 120) {       
                     if( $numero < 2) {   
-                        echo"EEEEEEEEEEEEEEEE "; 
+                      
                         $date = new DateTime( $data_in );
-                        $data=$date->format('d/m/Y ');echo "<br>";
-                        echo "começa ".$data_inicio=$date->format('y-m-d 19:00:00');echo "<br>";
+                        $data=$date->format('d/m/Y ');
+                       $data_inicio=$date->format('y-m-d 19:00:00');
                         $data_31= trim($date->format('d') );
                         $date = new DateTime($data_inicio);//$date = new DateTime('2000-01-01');
                         $date_fim=$date->add(new DateInterval('PT12H'));
-                        echo "termina".$data_fim= $date_fim->format('y-m-d H:i:s') . "\n";
-                        echo "uuuuuuuuuuuuuuuupppp=".$data_31;
+                      $data_fim= $date_fim->format('y-m-d H:i:s') . "\n";
+                      
                         trim($data_31);
                         $horas=$horas+12;   
                        
@@ -78,29 +78,28 @@
                             $stmt->bindParam(8,  $id_setor);    
                         $stmt->execute(); 
                        
-                        echo"<hr>";
+                       
                        
                        
                     }
                             
 
-                        echo"<hr>";
+                   
                        
                             $date->add(new DateInterval('PT96H'));   
                         
 
 
                        
-                        echo "começa" . $data_inicio=$date->format('Y-m-d H:i:s');echo "<br>";
-                        echo "turno" . $turno=$date->format('H');echo "<br>";
+                        $data_inicio=$date->format('Y-m-d H:i:s');
+                        $turno=$date->format('H');
                         $data_31= trim($date->format('d') );
                         $data_fim=$date->add(new DateInterval('PT12H'));
-                        echo "termina".$data_fim= $date->format('Y-m-d H:i:s') . "\n";
-                        
-                        echo "uuuuuuuuuuuurrrrr=".$data_31;
+                        $data_fim= $date->format('Y-m-d H:i:s') . "\n";
+                        $data_31;
                         trim($data_31);
-                        if($turno=='07'){$turno="SD";}echo "<br>";
-                        if($turno=='19'){$turno="SN";}echo "<br>";
+                        if($turno=='07'){$turno="SD";};
+                        if($turno=='19'){$turno="SN";};
                        
                             $stmt = $conexao->prepare("INSERT INTO events(start, end,title,local,nome_usuario,id_usuario,color,id_setror) VALUES (?,?,?,?, ?,?,?,?)");
                             $stmt->bindParam(1, $data_inicio);
@@ -113,22 +112,18 @@
                             $stmt->bindParam(8,  $id_setor);
                         $stmt->execute(); 
                         $numero++;
-                            
-                         echo"<hr>";
-                             
-                       
                         
                         $date->add(new DateInterval('PT24H')); 
                         $data_31= trim($date->format('d') );  
                         
-                        echo "começa" . $data_inicio=$date->format('Y-m-d H:i:s');echo "<br>";
-                        echo "turno" . $turno=$date->format('H');echo "<br>";
+                        $data_inicio=$date->format('Y-m-d H:i:s');
+                        $turno=$date->format('H');
                         $data_31= trim($date->format('d') );
                         $data_fim=$date->add(new DateInterval('PT12H'));
-                        echo "termina".$data_fim= $date->format('Y-m-d H:i:s') . "\n";
+                       $data_fim= $date->format('Y-m-d H:i:s') . "\n";
                         if($data_31=='31'){$exiir='0';}else{$exiir='1';}
-                        if($turno=='07'){$turno="SD";}echo "<br>";
-                        if($turno=='19'){$turno="SN";}echo "<br>";
+                        if($turno=='07'){$turno="SD";}
+                        if($turno=='19'){$turno="SN";}
                         $stmt = $conexao->prepare("INSERT INTO events(start, end,title,local,nome_usuario,id_usuario,color,id_setror,exibir) VALUES (?,?,?,?,?, ?,?,?,?)");
                         $stmt->bindParam(1, $data_inicio);
                         $stmt->bindParam(2, $data_inicio);
@@ -140,7 +135,7 @@
                         $stmt->bindParam(8, $id_setor);
                         $stmt->bindParam(9, $exiir);
                         $stmt->execute(); 
-                        echo"<hr>";
+                       
                         $numero++;
                       
                        
@@ -150,9 +145,9 @@
                      
                 }  else {
                 while ($evento = $stmt->fetch(PDO::FETCH_OBJ)) {
-             echo "nome=".$evento->nome_usuario."<br>";
+            $evento->nome_usuario;
              $data_evento=$evento->start;
-             echo "Data=". $data_evento."<br>";
+              $data_evento;
              }  }
 
             }

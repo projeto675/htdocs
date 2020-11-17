@@ -11,12 +11,30 @@ if(!isset($_SESSION) ){
     session_id();
 
 }
+/** O nome do banco de dados*/
+define('DB_NAME', 'app_escala');
+
+/** Usuário do banco de dados MySQL */
+define('DB_USER', 'root');
+
+/** Senha do banco de dados MySQL */
+define('DB_PASSWORD', '');
+
+/** nome do host do MySQL */
+define('DB_HOST', 'localhost');
 include_once'database.php';
 
 define('HOST', 'localhost');
 define('USER', 'root');
 define('PASS', '');
 define('DBNAME', 'app_escala');
+$servidor = "localhost";
+$usuario = "root";
+$senha = "";
+$dbname = "app_escala";
+
+//Criar a conexao
+echo $conect = mysqli_connect($servidor, $usuario, $senha, $dbname);
 
 $conn = new PDO('mysql:host=' . HOST . ';dbname=' . DBNAME . ';', USER, PASS);
 

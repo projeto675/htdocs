@@ -1,11 +1,5 @@
 <?php include_once 'topo.php';
-        if($_SESSION['nivel']=="user"){
-            include'menu_superior_user.php';
-        }
-        elseif($_SESSION['nivel']=="coord"){
-            include'menu_superior.php';
-        }
-        else{  include'menu_superior.php';}
+        
        
       
 

@@ -12,12 +12,12 @@ if ($stmtz->execute()) {
   $count = $stmtz->rowCount();
     if($count >0){  
          while ($equipe = $stmtz->fetch(PDO::FETCH_OBJ)) {
-             echo $id_usuario=trim($equipe->id_membro);echo "<br>";
-             echo $nome_usuario=$equipe->nome;echo "<br>";
-             echo"ordem=". $ordem_esquipe=$equipe->ordem_equipe;echo "<br>";
-             echo $nome_usuario=$equipe->nome;echo "<br>";
-             echo $local=$equipe->setor;echo "<br>";
-             echo $id_setor=$equipe->id_setor;echo "<br>"; 
+             $id_usuario=trim($equipe->id_membro);
+             $nome_usuario=$equipe->nome;
+             $ordem_esquipe=$equipe->ordem_equipe;
+             $nome_usuario=$equipe->nome;
+             $local=$equipe->setor;
+             $id_setor=$equipe->id_setor; 
            
           
 if( $ordem_esquipe=='1'){$color="#8a63d2;";}
@@ -36,3 +36,13 @@ if( $ordem_esquipe=='6'){
             }
 }   } }
 ?>
+ <div class="card text-center">
+  <div class="card-body">
+  <h5 class="card-title">Escala Gerada Com Sucesso  </h5>
+  <p class="card-text"></p>
+  <a href="/escala_tabela.php?id=<?=$_GET['id'];?>" class="btn btn-primary">Clik Aqui para Visualizar.</a>
+  </div>
+  <div class="card-footer text-muted">
+   
+  </div>
+</div>

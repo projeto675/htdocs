@@ -2,8 +2,7 @@
              $data_incio = mktime(0, 0, 0, date('m')+1 ,  $ordem_esquipe , date('Y')) ;
              $data_in = date('Y-m-d ',$data_incio);
              $data_fim = mktime(23, 59, 59, date('m')+2, date('d')-date('j'), date('Y'));
-              $data_fim=  date('Y-m-d ',$data_fim);
-             echo "datacomeco".$data_in;
+             $data_fim=  date('Y-m-d ',$data_fim);
              $id_user=$id_usuario;
              $nome=$nome_usuario;
              $id_user=$id_usuario;
@@ -39,7 +38,8 @@
              if ($stmt->execute()) {
                 $count = $stmt->rowCount();
                 if($count =='0') {
-                echo "ok vamos adicionar"; echo"<br>";echo"<br>";echo"<br>";echo"<br>";
+               
+
                 /////////////não tenho evento vou cadastrar
                 $date = new DateTime($minha_data);
                 $turno=false;
@@ -57,13 +57,13 @@
                      
                         $date = new DateTime( $data_in );
                         $data_31= trim($date->format('d') );
-                        echo "turno" . $turno=$date->format('H');
+                        $turno=$date->format('H');
                         $data=$date->format('d/m/Y ');
-                        echo "começa ".$data_inicio=$date->format('y-m-d 07:00:00');
+                       $data_inicio=$date->format('y-m-d 07:00:00');
                        
                         $date = new DateTime($data_inicio);//$date = new DateTime('2000-01-01');
                         $date_fim=$date->add(new DateInterval('PT12H'));
-                        echo "termina".$data_fim= $date_fim->format('y-m-d H:i:s') . "\n";
+                        $data_fim= $date_fim->format('y-m-d H:i:s') . "\n";
                         if($data_31=='31'){$exiir='0';}else{$exiir='1';}
                         if($turno=='07' or $turno=='00'  ){$turno="SD";}
                         if($turno=='19'){$turno="SN";}
@@ -82,7 +82,7 @@
                         $stmt->execute(); 
                     
                     }                   
-                        echo"<hr>";                   
+                                    
 
                     
                         
@@ -114,9 +114,9 @@
                         
                       $data_inicio=$date->format('Y-m-d H:i:s');
                         $data_31= trim($date->format('d') );
-                        echo "turno" . $turno=$date->format('H');
+                        $turno=$date->format('H');
                         $data_fim=$date->add(new DateInterval('PT12H'));
-                        echo "termina".$data_fim= $date->format('Y-m-d H:i:s') . "\n";
+                        $data_fim= $date->format('Y-m-d H:i:s') . "\n";
                         if($data_31=='31'){$exiir='0';}else{$exiir='1';}
                         if($turno=='07'){$turno="SD";}
                         if($turno=='19'){$turno="SN";}
@@ -142,9 +142,9 @@
                      
                 }  else {
                 while ($evento = $stmt->fetch(PDO::FETCH_OBJ)) {
-             echo "nome=".$evento->nome_usuario."<br>";
+             $evento->nome_usuario;
              $data_evento=$evento->start;
-             echo "Data=". $data_evento."<br>";
+             $data_evento;
              }  }
 
             }

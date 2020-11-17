@@ -2,7 +2,6 @@
     require_once('functions.php');
     index();
 ?>
-
 <?php include(HEADER_TEMPLATE); ?>
 
 <header>

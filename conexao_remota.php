@@ -11,7 +11,18 @@ if(!isset($_SESSION) ){
     session_id();
 
 }
+/** O nome do banco de dados*/
+define('DB_NAME', 'app_escala');
 
+/** Usuário do banco de dados MySQL */
+define('DB_USER','irismar_100');
+
+/** Senha do banco de dados MySQL */
+define('DB_PASSWORD', 'irisMAR100');
+
+/** nome do host do MySQL */
+define('DB_HOST', 'mysql380.umbler.com');
+include_once'database.php';
 
 define('HOST', 'mysql380.umbler.com');
 define('USER', 'irismar_100');

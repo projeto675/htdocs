@@ -5,12 +5,8 @@ coordenador();
 
 include_once'menu_superior.php';
 if(isset($_POST['customer'])){
-  $customer=[];
-  $customer=$_POST['customer'];
- 
-  //$post= $customer['3'];
-//////fazer o calculo o numero e tecnicos totais
-///para 12X24X12X96 precisa de 6 quipes 120horas casa 
+$customer=[];
+$customer=$_POST['customer'];
 if($customer ["'tipo_escala'"]=='12X24X12X96'){$n='6';}
 if($customer ["'tipo_escala'"]=='12X36'){$n='4';}
 $customer['numero_de_equipes']=$n;
@@ -20,26 +16,8 @@ $customer['local']=trim($_SESSION['local_trabalho']);
 $customer['data']=$agora;
 //var_dump($customer);
 save('setor', $customer);   
-exit();
-    $setor=trim( $_POST['setor']);
-    $id_cordenador=trim($_SESSION['id']);
-    $local_trabalho=trim($_SESSION['local_trabalho']);
 
-    $stmt = $conexao->prepare("INSERT INTO setor (setor,id_cordenador,local,tipo_escala,numero_tecnicos_turno,numero_tec_total,numero_de_equipes) VALUES (?,?,?,?,?,?,?)");
-    $stmt->bindParam(1,$setor);
-    $stmt->bindParam(2,$id_cordenador);
-    $stmt->bindParam(3,$local_trabalho);
-    $stmt->bindParam(4,$_POST['tipo_escala']);
-    $stmt->bindParam(5,$_POST['numero_tecnicos_turno']);
-    $stmt->bindParam(6,$ntecnicos);
-    $stmt->bindParam(7,$n);
-    $cad_user_ok=$stmt->execute();   
-    if($cad_user_ok){ 
-    $_SESSION['envio']="1";
-    }  else {echo "erro ao gravar"; }       
-     
 }
-
 ?>
 <div class="alert alert-secondary" role="alert">
   <h4 class="alert-heading">Nessa Etapa </h4>

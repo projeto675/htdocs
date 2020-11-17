@@ -1,44 +1,50 @@
 <? 
-
-$stmt = $conexao->prepare("SELECT id,local,numero_tecnicos_turno,setor,tipo_escala,numero_de_equipes,numero_tec_total  FROM setor  WHERE id_cordenador=:id    ORDER BY id DESC");
-$stmt->bindValue(":id", $_SESSION['id']);
-$stmt->execute();
-//$stmt = $conexao->prepare("SELECT * FROM usuario WHERE nome=$nome");
- if ($stmt->execute()) {
-?><table class="table">
+$customers = null;
+$customer = null;
+global $customers;
+$customers = find('setor',$_SESSION['id'],'  WHERE id_cordenador=',"ORDER BY id DESC" );
+?>
+<table class="table table-striped">
 <thead>
-         <tr>
-           <th scope="col">#</th>
-           <th scope="col">Local</th>
-           <th scope="col">setor</th>
-           <th scope="col">Tipo escala</th>
-           <th scope="col"> Tecnicos por equipe </th>
-           <th scope="col">Número de equipes</th>
-           <th scope="col">Total de Tecnicos do  setor</th>
-           <th scope="col">ação</th>
-         </tr>
-       </thead><tbody><?
- $count = $stmt->rowCount();
-     if($count >0){?> <button type="button" class="btn btn-light">Você  tem setor <?=$count;?>  cadastrados</button> <?
-    while ($login = $stmt->fetch(PDO::FETCH_OBJ)) {
-        ?>
-        <tr>
-      <th scope="row"><?= $login->id;?> </th>
-      <td><?= $login->local;?> </td>
-      <td><?= $login->setor;?> </td>
-      <td><?= $login->tipo_escala;?></td>
-      <td><?= $login->numero_tecnicos_turno;?></td>
-      <td><?= $login->numero_de_equipes;?></td>
-      <td><?= $login->numero_tec_total;?></td>
-      <td><button type="button" class="btn btn-warning"><a href="/montar_equipe.php?setor=<?=$login->id;?>&&ordem=1">Gerenciar</a></button</td>
+	<tr>
+		<th>ID</th>
+		<th >Local</th>
+		<th>Setor</th>
+		<th>Escala </th>
+		<th>Tecnicos por plantão</th>
+		<th>Numero de Equipes</th>
+    <th>Numero tec no setor </th>
+	</tr>
+</thead>
 
-    </tr>
-   
-      </li><?
-        
-    }
-    ?> </ul><?
-} else{ ?><button type="button" class="btn btn-light">Você  não tem setor cadastrados</button><?}
+<tbody>
+<?php   if ($customers) : ?>
+<?php foreach ($customers as $customer) : 
+ ///var_dump($customer);?>
 
-
-} ?></tbody></table><?
+	<tr>
+ 
+		<td><?php echo $customer['id']; ?></td>
+		<td><?php echo $customer['local']; ?></td>
+		<td><?php echo $customer['setor']; ?></td>
+    <td><?php echo $customer['tipo_escala']; ?></td>
+		<td><?php echo $customer['numero_tecnicos_turno']; ?></td>
+    <td><?php echo $customer['numero_de_equipes']; ?></td>
+    <td><?php echo $customer['numero_tec_total']; ?></td>
+		<td class="actions text-right">
+		
+			<a href="/montar_equipe.php?setor=<?php echo $customer['id']; ?>&&ordem=0" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i> Editar</a>
+			
+			
+			</a>
+    
+		</td>
+	</tr>
+<?php endforeach; ?>
+<?php else : ?>
+	<tr>
+		<td colspan="6">Nenhum registro encontrado.</td>
+	</tr>
+<?php endif; ?>
+</tbody>
+</table>

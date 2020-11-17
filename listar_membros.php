@@ -28,8 +28,8 @@ $count = $stmt->rowCount();
       $count2 = $stmt2->rowCount();
            if($count2 == 0){
             ?><li class="nav-item active">
-        <a class="nav-link" style="color: #343a40;" onClick="fill('<?= $login->id;?> /<?= $login->nome;?> <?= $login->sobrenome;?> / <?= $login->local_trabalho;?>');" href="#"><?= $login->id;?> <?= $login->nome;?> <?= $login->sobrenome;?> <?= $login->local_trabalho;?> <span class="sr-only">(Página atual)</span></a>
-      </li><?    
+        <a class="nav-link" style="color: #343a40;" onClick="fill('<?= $login->id;?> /<?= $login->nome;?> <?= $login->sobrenome;?> / <?= $login->local_trabalho;?>');" href="#"> <?= $login->nome;?> <?= $login->sobrenome;?> <?= $login->local_trabalho;?> <span class="sr-only">(Página atual)</span></a>
+    <hr>  </li><?    
       } else{ 
         ?>
       <? 
